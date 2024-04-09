@@ -181,6 +181,6 @@ def test_font_psnames():
       errors.append(f"font file {font_path} should have a single postScriptName and not {postscript_names}")
     for postscript_name in postscript_names:
       if not (postscript_name in xml_psnames):
-        errors.append(f"font file {font_path} has postScriptName {postscript_name} not matching XML entries {xml_psnames}")
+        errors.append(f"font file {font_path} has postScriptName '{postscript_name}' not matching XML entries {xml_psnames}")
 
   assert not errors, ", ".join(errors)
