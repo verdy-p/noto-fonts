@@ -179,9 +179,8 @@ def test_font_psnames():
     postscript_names = set(get_name_entry_strings(font, _POSTSCRIPT_NAME))
     if len(postscript_names) != 1:
       errors.append(f"font file {font_path} should have a single postScriptName and not {postscript_names}")
-      continue
-    for xml_psname in xml_psnames:
-      if not (xml_psname in postscript_names):
-        errors.append(f"the _POSTSCRIPT_NAME set in font file {font_path} doesn't match the entry in XML: {xml_psname}")
+    for postscript_name in postscript_names:
+      if not (postscript_name in xml_psnames):
+        errors.append(f"font file {font_path} has postScriptName {postscript_name} not matching XML entries {xml_psnames}")
 
   assert not errors, ", ".join(errors)
