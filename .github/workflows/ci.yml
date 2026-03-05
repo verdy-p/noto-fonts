@@ -19,7 +19,9 @@ jobs:
       with:
         egress-policy: audit
   
-    - uses: actions/checkout@v4
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
     - name: Set up Python 3.9
       uses: actions/setup-python@v6
       with:
@@ -38,7 +40,9 @@ jobs:
       with:
         egress-policy: audit
 
-    - uses: actions/checkout@v4
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
     - name: Set up Python ${{ matrix.config.python-version }}
       uses: actions/setup-python@v6
       with:
