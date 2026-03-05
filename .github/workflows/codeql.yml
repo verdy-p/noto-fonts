@@ -28,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ $supported-codeql-languages ]
+        language: [ "rust", "python", "cpp", "csharp", "java", "go", "actions", "javascript", "swift", "ruby" ]
         # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
 
     steps:
