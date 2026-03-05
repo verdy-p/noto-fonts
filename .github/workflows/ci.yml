@@ -1,12 +1,15 @@
 name: Continuous Test + Deploy
+
 on:
   push:
     branches: [main]
     tags: ["v*.*.*"]
   pull_request:
     branches: ['**']
+
 permissions:
   contents: read
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -15,29 +18,34 @@ jobs:
       uses: step-security/harden-runner@v2
       with:
         egress-policy: audit
+  
     - uses: actions/checkout@v4
     - name: Set up Python 3.9
       uses: actions/setup-python@v6
       with:
         python-version: 3.9
+
   test:
     runs-on: ${{ matrix.config.platform }}
     strategy:
       matrix:
         config:
           - {platform: ubuntu-latest, python-version: 3.9}
+
     steps:
     - name: Harden Runner
       uses: step-security/harden-runner@v2
       with:
         egress-policy: audit
+
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.config.python-version }}
       uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.config.python-version }}
+    
     - name: Install requirements
       run: pip install -r requirements.txt
+    
     - name: Run the tests
       run: pytest
-# We do not, as yet, have a deploy
