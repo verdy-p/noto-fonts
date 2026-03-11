@@ -1,41 +1,28 @@
-name: Continuous Test + Deploy
+name: 'Continuous Test + Deploy'
 
 on:
   push:
-    branches: [main]
-    tags: ["v*.*.*"]
+    branches: [ 'main' ]
+    tags: [ 'v*.*.*' ]
   pull_request:
-    branches: ['**']
+    branches: [ '**' ]
 
 permissions:
   contents: read
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Harden Runner
-      uses: step-security/harden-runner@58077d3c7e43986b6b15fba718e8ea69e387dfcc # v2.15.1
-      with:
-        egress-policy: audit
-
-    - name: Checkout Repository
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-    - name: Set up Python 3.9
-      uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
-      with:
-        python-version: 3.9
-
-  test-and-deploy:
     runs-on: ${{ matrix.config.platform }}
     strategy:
       matrix:
         config:
-          - {platform: ubuntu-latest, python-version: 3.9}
+          - {
+            platform: ubuntu-latest,
+            python-version: 3.9,
+            }
 
     steps:
-      - name: Harden Runner
+      - name: 'Harden Runner'
         uses: step-security/harden-runner@58077d3c7e43986b6b15fba718e8ea69e387dfcc # v2.15.1
         with:
           egress-policy: audit
@@ -46,16 +33,16 @@ jobs:
             release-assets.githubusercontent.com:443
             uploads.github.com:443
 
-      - name: Checkout Repository
+      - name: 'Checkout Repository'
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: Set up Python ${{ matrix.config.python-version }}
+      - name: 'Set up Python ${{ matrix.config.python-version }}'
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: ${{ matrix.config.python-version }}
       
-      - name: Install requirements
+      - name: 'Install requirements with pip'
         run: pip install -r requirements.txt
     
-      - name: Run the tests
+      - name: 'Run the tests'
         run: pytest
