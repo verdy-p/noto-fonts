@@ -1,7 +1,7 @@
 # This workflow uses actions that are not certified by GitHub. They are provided
 # by a third-party and are governed by separate terms of service, privacy
 # policy, and support documentation.
-name: 'Scorecard supply-chain security'
+name: 'ScoreCard supply-chain security'
 
 on:
   # For Branch-Protection check. Only the default branch is supported. See
@@ -19,7 +19,7 @@ permissions: read-all
 
 jobs:
   analysis:
-    name: Scorecard analysis
+    name: 'Scorecard supply-chain security analysis'
     runs-on: ubuntu-latest
     permissions:
       # Needed to upload the results to code-scanning dashboard.
@@ -46,9 +46,10 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: 'Run analysis'
+      - name: 'Run ScoreCard supply-chain security analysis'
         uses: ossf/scorecard-action@4eaacf0543bb3f2c246792bd56e8cdeffafb205a # v2.4.3
         with:
+          # Path to SARIF file relative to the root of the repository
           results_file: results.sarif
           results_format: sarif
           # (Optional) "write" PAT token. Uncomment the `repo_token` line below if:
@@ -68,15 +69,17 @@ jobs:
 
       # Upload the results as artifacts (optional). Commenting out will disable uploads of run results in SARIF
       # format to the repository Actions tab.
-      - name: 'Upload artifact'
+      - name: 'Upload the results SARIF file as artifacts to the repository Actions tab'
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: SARIF file
+          # Path to SARIF file relative to the root of the repository
           path: results.sarif
           retention-days: 5
 
-      # Upload the results to GitHub's code scanning dashboard.
-      - name: 'Upload to code-scanning'
+      # Upload the results SARIF file to the repository Code scanning dashboard.
+      - name: 'Upload the results SARIF file to the repository Code scanning dashboard'
         uses: github/codeql-action/upload-sarif@0d579ffd059c29b07949a3cce3983f0780820c98 # v4.32.6
         with:
+          # Path to SARIF file relative to the root of the repository
           sarif_file: results.sarif
