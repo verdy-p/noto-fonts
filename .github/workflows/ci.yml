@@ -18,7 +18,7 @@ jobs:
       uses: step-security/harden-runner@v2
       with:
         egress-policy: audit
-  
+
     - name: Checkout Repository
       uses: actions/checkout@v4
 
@@ -27,7 +27,7 @@ jobs:
       with:
         python-version: 3.9
 
-  test:
+  test-and-deploy:
     runs-on: ${{ matrix.config.platform }}
     strategy:
       matrix:
@@ -46,16 +46,16 @@ jobs:
             release-assets.githubusercontent.com:443
             uploads.github.com:443
 
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: Set up Python ${{ matrix.config.python-version }}
-      uses: actions/setup-python@v6
-      with:
-        python-version: ${{ matrix.config.python-version }}
+      - name: Set up Python ${{ matrix.config.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.config.python-version }}
+      
+      - name: Install requirements
+        run: pip install -r requirements.txt
     
-    - name: Install requirements
-      run: pip install -r requirements.txt
-    
-    - name: Run the tests
-      run: pytest
+      - name: Run the tests
+        run: pytest
