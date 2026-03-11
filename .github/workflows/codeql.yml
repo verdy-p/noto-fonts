@@ -19,6 +19,8 @@ permissions:
 jobs:
   analyze:
     name: Analyze
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     runs-on: ubuntu-latest
     permissions:
       actions: read
