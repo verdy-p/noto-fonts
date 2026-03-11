@@ -14,7 +14,9 @@ on:
 
 jobs:
   tfsec:
-    name: 'Run tfsec sarif report'
+    name: 'Run Teraform Security SARIF report'
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -22,16 +24,29 @@ jobs:
       security-events: write
 
     steps:
-      - name: 'Clone repo'
-        uses: actions/checkout@v4
+      - name: 'Checkout repository'
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: 'Run tfsec'
+      - name: 'Run Teraform Security check'
         uses: aquasecurity/tfsec-sarif-action@21ded20e8ca120cd9d3d6ab04ef746477542a608
         with:
+          # Path to SARIF file relative to the root of the repository
           sarif_file: tfsec.sarif
 
-      - name: 'Upload SARIF file'
-        uses: github/codeql-action/upload-sarif@v3
+      # Upload the results as artifacts (optional). Commenting out will disable uploads of run results in SARIF
+      # format to the repository Actions tab.
+      - name: 'Upload the results SARIF file as artifacts to the repository Actions tab'
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
+          name: SARIF file
+          # Path to SARIF file relative to the root of the repository
+          path: tfsec.sarif
+          retention-days: 5
+
+      # Upload the results SARIF file to the repository Code scanning dashboard.
+      - name: 'Upload the results SARIF file to the repository Code scanning dashboard'
+        uses: github/codeql-action/upload-sarif@0d579ffd059c29b07949a3cce3983f0780820c98 # v4.32.6
+        with:
+          name: SARIF file
           # Path to SARIF file relative to the root of the repository
           sarif_file: tfsec.sarif
