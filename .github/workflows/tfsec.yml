@@ -38,7 +38,6 @@ jobs:
       - name: 'Upload the results SARIF file as artifacts to the repository Actions tab'
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
-          name: SARIF file
           # Path to SARIF file relative to the root of the repository
           path: tfsec.sarif
           retention-days: 5
@@ -47,6 +46,5 @@ jobs:
       - name: 'Upload the results SARIF file to the repository Code scanning dashboard'
         uses: github/codeql-action/upload-sarif@0d579ffd059c29b07949a3cce3983f0780820c98 # v4.32.6
         with:
-          name: SARIF file
           # Path to SARIF file relative to the root of the repository
           sarif_file: tfsec.sarif
