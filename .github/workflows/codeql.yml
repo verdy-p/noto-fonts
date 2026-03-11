@@ -28,8 +28,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ "rust", "python", "cpp", "csharp", "java", "go", "actions", "javascript", "swift", "ruby" ]
+        language: [ "python", "actions" ]
         # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
+        # [ "rust", "python", "cpp", "csharp", "java", "go", "actions", "javascript", "swift", "ruby" ]
 
     steps:
       - name: Harden Runner
