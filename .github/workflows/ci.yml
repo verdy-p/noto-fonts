@@ -42,7 +42,7 @@ jobs:
           python-version: ${{ matrix.config.python-version }}
       
       - name: 'Install requirements with pip'
-        run: pip install -r requirements.txt@0a815d1dbd3c1f5d585bae860f3077bee5a6f044
+        run: pip install -r requirements.txt
     
       - name: 'Run the tests'
         run: pytest
